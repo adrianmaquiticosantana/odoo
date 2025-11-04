@@ -15,6 +15,10 @@ WORKDIR /opt/odoo
 
 COPY . .
 
+# Copiar el archivo de configuración a la ruta esperada
+RUN cp odoo.conf /etc/odoo.conf
+
+# Instalar dependencias
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8069
