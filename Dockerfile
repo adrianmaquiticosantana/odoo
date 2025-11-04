@@ -9,18 +9,20 @@ RUN apt-get update && apt-get install -y \
     libsasl2-dev \
     libssl-dev \
     node-less \
+    gettext \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/odoo
 
 COPY . .
 
-# Copiar el archivo de configuración a la ruta esperada
-RUN cp odoo.conf /etc/odoo.conf
+# Hacer el script ejecutable
+RUN chmod +x /opt/odoo/entrypoint.sh
 
 # Instalar dependencias
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8069
 
-CMD ["python3", "odoo-bin", "-c", "/etc/odoo.conf"]
+# Usar el script como entrypoint
+ENTRYPOINT ["/opt/odoo/entrypoint.sh"]
